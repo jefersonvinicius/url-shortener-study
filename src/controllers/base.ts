@@ -1,12 +1,11 @@
-import { Request } from "express";
+import { Request, Response, Send } from 'express';
 
 export namespace Controller {
-  export type Response = {
-    statusCode: number;
-    body?: any;
-  };
+  export abstract class BaseController {
+    abstract handle(request: Request, response: Response): Promise<any>;
 
-  export interface Controller {
-    handle(request: Request): Promise<Response>;
+    protected getComingBaseUrl(request: Request) {
+      return `${request.protocol}://${request.hostname}:3333`;
+    }
   }
 }
